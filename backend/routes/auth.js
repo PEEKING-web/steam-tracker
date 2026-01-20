@@ -8,8 +8,21 @@ router.get('/steam', passport.authenticate('steam', { failureRedirect: '/' }));
 
 // Route 2: Steam callback (where Steam redirects after login)
 router.get('/steam/return',
-  passport.authenticate('steam', { failureRedirect: '/' }),
+  (req, res, next) => {
+    console.log('=== STEAM CALLBACK HIT ===');
+    console.log('Session ID:', req.sessionID);
+    next();
+  },
+  passport.authenticate('steam', { 
+    failureRedirect: `${process.env.FRONTEND_URL}/`,
+    failureMessage: true 
+  }),
   (req, res) => {
+    console.log('=== AUTH SUCCESS ===');
+    console.log('User:', req.user);
+    console.log('Authenticated:', req.isAuthenticated());
+    console.log('Session:', req.session);
+    
     // Successful authentication, redirect to frontend
     res.redirect(`${process.env.FRONTEND_URL}/profile`);
   }
