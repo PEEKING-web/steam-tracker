@@ -63,9 +63,28 @@ function Landing() {
           Establish Connection
         </button>
 
-        <p className="text-[#71717A] text-[10px] mt-8 font-mono uppercase tracking-[0.2em]">
-          Auth_Protocol: Steam OpenID v2.0
+            <div className="mt-8 space-y-4 max-w-xl mx-auto">
+        <p className="text-[#71717A] text-xs font-mono uppercase tracking-[0.2em] text-center">
+          Secure Authentication via Steam
         </p>
+        
+        <div className="bg-[#060606] border border-yellow-500/20 rounded-lg p-6">
+          <div className="flex items-start gap-4">
+            <span className="text-3xl grayscale">⚠️</span>
+            <div className="flex-1">
+              <h3 className="text-yellow-500/90 font-mono text-xs font-bold uppercase tracking-[0.2em] mb-3">
+                Brave Browser Notice
+              </h3>
+              <p className="text-[#A1A1AA] font-mono text-[11px] leading-relaxed mb-3">
+                Brave's privacy shields block cross-origin cookies required for Steam authentication.
+              </p>
+              <p className="text-[#71717A] font-mono text-[10px] uppercase tracking-tight">
+                Fix: Click Brave icon → Toggle "Shields" OFF for this site
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   );
