@@ -8,23 +8,22 @@ router.get('/steam', passport.authenticate('steam', { failureRedirect: '/' }));
 
 // Route 2: Steam callback (where Steam redirects after login)
 router.get('/steam/return',
-  (req, res, next) => {
-    console.log('=== STEAM CALLBACK HIT ===');
-    console.log('Session ID:', req.sessionID);
-    next();
-  },
-  passport.authenticate('steam', { 
-    failureRedirect: `${process.env.FRONTEND_URL}/`,
-    failureMessage: true 
-  }),
+  passport.authenticate('steam', { failureRedirect: '/' }),
   (req, res) => {
-    console.log('=== AUTH SUCCESS ===');
-    console.log('User:', req.user);
-    console.log('Authenticated:', req.isAuthenticated());
-    console.log('Session:', req.session);
-    
-    // Successful authentication, redirect to frontend
-    res.redirect(`${process.env.FRONTEND_URL}/profile`);
+    // ✅ SAVE SESSION BEFORE REDIRECT
+    req.session.save((err) => {
+      if (err) {
+        console.error('❌ Session save error:', err);
+        return res.redirect(`${process.env.FRONTEND_URL}/`);
+      }
+      
+      console.log('✅ Session saved successfully');
+      console.log('User:', req.user);
+      console.log('Session ID:', req.sessionID);
+      
+      // Successful authentication, redirect to frontend
+      res.redirect(`${process.env.FRONTEND_URL}/profile`);
+    });
   }
 );
 
@@ -45,6 +44,9 @@ router.get('/logout', (req, res) => {
 
 // Route 4: Check if user is authenticated
 router.get('/check', (req, res) => {
+  console.log('Auth check - Session ID:', req.sessionID);
+  console.log('Authenticated:', req.isAuthenticated());
+  
   if (req.isAuthenticated()) {
     res.json({ authenticated: true, user: req.user });
   } else {
