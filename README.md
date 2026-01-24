@@ -26,7 +26,6 @@ Steam Tracker is a full-stack web application that integrates with the **Steam W
 ---
 
 ## 📸 Screenshots
-> Put your screenshots in `assets/`
 
 ![Dashboard](assets/dashboard.png)
 ![Library](assets/library.png)
@@ -75,4 +74,4 @@ Steam Tracker is a full-stack web application that integrates with the **Steam W
 ---
 
 ## 🧾 License
-MIT License — see [LICENSE](LICENSE)
+MIT License[LICENSE](LICENSE)
