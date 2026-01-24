@@ -14,6 +14,7 @@ import sessionsRoutes from './routes/sessions.js';
 import recommendationsRoutes from './routes/recommendations.js';
 import { connectDB } from './config/db.js';
 import MongoStore from 'connect-mongo';
+import { randomUUID } from 'crypto';
 
 // Load environment variables
 dotenv.config();
@@ -69,7 +70,7 @@ app.use(session({
   },
 
   genid: function(req) {
-    return require('crypto').randomUUID(); // Generate proper UUID
+    return randomUUID(); // Generate proper UUID
   }
 }));
 
