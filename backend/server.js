@@ -49,19 +49,19 @@ const sessionStore = MongoStore.create({
 
 
 sessionStore.on('error', (error) => {
-  console.error('❌ Session store error:', error.message);
+  console.error('Session store error:', error.message);
 });
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false, // CRITICAL: prevents null sessionId
+  saveUninitialized: false, 
   store: sessionStore,
-  rolling: true, // Reset cookie expiration on activity
+  rolling: true, 
   proxy: true,
   name: 'steamtracker.sid', 
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    maxAge: 1000 * 60 * 60 * 24 * 7, 
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
