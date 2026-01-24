@@ -12,12 +12,19 @@ import statsRoutes from './routes/stats.js';
 import categoriesRoutes from './routes/categories.js';
 import sessionsRoutes from './routes/sessions.js';
 import recommendationsRoutes from './routes/recommendations.js';
+import { connectDB } from './config/db.js';
+import MongoStore from 'connect-mongo';
 
 // Load environment variables
 dotenv.config();
 
+// Connect to MongoDB
+connectDB();
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+
 
 // Middleware
 app.use(express.json());
@@ -31,18 +38,33 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Session configuration 
+
+const sessionStore = MongoStore.create({
+  mongoUrl: process.env.MONGODB_URI,
+  collectionName: 'sessions',
+  ttl: 7 * 24 * 60 * 60, 
+  autoRemove: 'native', 
+  touchAfter: 24 * 3600 
+});
+
+
+sessionStore.on('error', (error) => {
+  console.error('❌ Session store error:', error.message);
+});
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false,
-  proxy: true, // 
+  saveUninitialized: false, // CRITICAL: prevents null sessionId
+  store: sessionStore,
+  rolling: true, // Reset cookie expiration on activity
+  proxy: true,
   name: 'steamtracker.sid', 
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 7, 
-    secure: true, 
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     path: '/'
   }
 }));

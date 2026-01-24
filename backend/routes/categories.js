@@ -7,7 +7,7 @@ import {
   removeGameFromCategory,
   deleteCategory,
   renameCategory
-} from '../utils/categoriesDB.js';
+} from '../utils/categoriesDB_mongo.js';
 
 const router = express.Router();
 
