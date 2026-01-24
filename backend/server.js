@@ -66,6 +66,10 @@ app.use(session({
     httpOnly: true,
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     path: '/'
+  },
+
+  genid: function(req) {
+    return require('crypto').randomUUID(); // Generate proper UUID
   }
 }));
 
