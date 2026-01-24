@@ -21,7 +21,7 @@ Steam Tracker is a full-stack web application that integrates with the **Steam W
 ---
 
 ## 🎥 Demo Video
-[Watch Demo Video] here (https://youtu.be/KuM2iyNbQX0) 
+[Watch Demo Video](https://youtu.be/KuM2iyNbQX0) 
 
 ---
 
