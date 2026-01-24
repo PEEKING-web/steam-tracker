@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CORS configuration - MUST come before session
+// CORS 
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true,
@@ -31,18 +31,18 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Session configuration - keeps users logged in
+// Session configuration 
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  proxy: true, // ✅ CRITICAL for Render
-  name: 'steamtracker.sid', // Custom cookie name
+  proxy: true, // 
+  name: 'steamtracker.sid', 
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-    secure: true, // Force HTTPS in production
+    maxAge: 1000 * 60 * 60 * 24 * 7, 
+    secure: true, 
     httpOnly: true,
-    sameSite: 'none', // Required for cross-origin
+    sameSite: 'none',
     path: '/'
   }
 }));
@@ -98,6 +98,6 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-  console.log(`✅ Frontend URL: ${process.env.FRONTEND_URL}`);
+  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Frontend URL: ${process.env.FRONTEND_URL}`);
 });

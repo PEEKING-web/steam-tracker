@@ -11,7 +11,7 @@ export const isAuthenticated = (req, res, next) => {
   });
 };
 
-// Middleware to attach user to response (optional, for debugging)
+// Middleware to attach user to response
 export const attachUser = (req, res, next) => {
   if (req.isAuthenticated()) {
     res.locals.user = req.user;

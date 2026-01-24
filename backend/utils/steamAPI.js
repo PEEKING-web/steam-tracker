@@ -53,7 +53,7 @@ export const getFriendsList = async (steamId) => {
   return data?.friendslist?.friends || [];
 };
 
-// ✅ FIXED: Get player achievements
+//Get player achievements
 export const getPlayerAchievements = async (steamId, appId) => {
   const url = `${STEAM_API_BASE}/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appId}&key=${STEAM_API_KEY}&steamid=${steamId}&l=english`;
 
@@ -94,7 +94,7 @@ export const getMultiplePlayerSummaries = async (steamIds) => {
   return data?.response?.players || [];
 };
 
-// ✅ FIXED: Get game achievement schema (USES AXIOS)
+//Get game achievement schema (USES AXIOS)
 export const getGameSchema = async (appid) => {
   const url = `${STEAM_API_BASE}/ISteamUserStats/GetSchemaForGame/v2/?key=${STEAM_API_KEY}&appid=${appid}`;
 

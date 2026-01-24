@@ -10,14 +10,14 @@ router.get('/steam', passport.authenticate('steam', { failureRedirect: '/' }));
 router.get('/steam/return',
   passport.authenticate('steam', { failureRedirect: '/' }),
   (req, res) => {
-    // ✅ SAVE SESSION BEFORE REDIRECT
+    //SAVE SESSION BEFORE REDIRECT
     req.session.save((err) => {
       if (err) {
-        console.error('❌ Session save error:', err);
+        console.error('Session save error:', err);
         return res.redirect(`${process.env.FRONTEND_URL}/`);
       }
       
-      console.log('✅ Session saved successfully');
+      console.log('Session saved successfully');
       console.log('User:', req.user);
       console.log('Session ID:', req.sessionID);
       
