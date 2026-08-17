@@ -66,7 +66,7 @@ router.post('/suggest', isAuthenticated, async (req, res) => {
       ],
       model: "openai/gpt-oss-20b",
       temperature: 0.7,
-      max_tokens: 500,
+      max_tokens: 2000,
       response_format: {
         type: "json_schema",
         json_schema: {
