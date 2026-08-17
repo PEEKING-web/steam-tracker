@@ -70,22 +70,51 @@ CRITICAL INSTRUCTIONS:
 
 Respond ONLY with valid JSON. No markdown, no code blocks, no extra text.`;
 
-    // Call Groq API
+    // Call Groq API- openAI model for recommendations
     const completion = await groq.chat.completions.create({
       messages: [
         {
           role: "system",
-          content: "You are a helpful gaming recommendation assistant. Always respond with valid JSON only."
+          content: "You are a gaming recommendation assistant. Recommend exactly 3 games from the user's Steam library."
         },
         {
           role: "user",
           content: prompt
         }
       ],
-      model: "openai/gpt-oss-20b", // Fast and accurate
+      model: "openai/gpt-oss-20b",
       temperature: 0.7,
       max_tokens: 500,
-      response_format: { type: "json_object" }
+      response_format: {
+        type: "json_schema",
+        json_schema: {
+          name: "game_recommendations",
+          strict: true,
+          schema: {
+            type: "object",
+            properties: {
+              recommendations: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string"
+                    },
+                    reason: {
+                      type: "string"
+                    }
+                  },
+                  required: ["name", "reason"],
+                  additionalProperties: false
+                }
+              }
+            },
+            required: ["recommendations"],
+            additionalProperties: false
+          }
+        }
+      }
     });
 
     // Parse AI response
