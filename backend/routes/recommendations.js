@@ -34,41 +34,23 @@ router.post('/suggest', isAuthenticated, async (req, res) => {
       }));
 
     // Create AI prompt
-    const prompt = `You are a gaming expert assistant. Based on the user's context and their Steam library, recommend exactly 3 games they should play right now.
+    const prompt = `You are a gaming expert assistant.
 
-User Context:
-- How their day was: ${dayType}
-- Current mood: ${mood}
-- Time available: ${timeAvailable}
+    Recommend exactly 3 games from the user's Steam library based on:
 
-User's Steam Library (top games by playtime):
-${topGames.map(g => `- ${g.name} (${g.hours}h played)`).join('\n')}
+    - Day type: ${dayType}
+    - Mood: ${mood}
+    - Time available: ${timeAvailable}
 
-CRITICAL INSTRUCTIONS:
-1. Recommend ONLY 3 games from their library above
-2. Match game names EXACTLY as shown in the library
-3. Consider their mood, day type, and available time
-4. Provide a brief reason for each (1 sentence, max 80 characters)
-5. Your response MUST be a valid JSON object with this EXACT structure:
+    Steam Library:
+    ${topGames.map(g => `- ${g.name} (${g.hours}h played)`).join('\n')}
 
-{
-  "recommendations": [
-    {
-      "name": "Exact Game Name From Library",
-      "reason": "Brief reason why"
-    },
-    {
-      "name": "Exact Game Name From Library",
-      "reason": "Brief reason why"
-    },
-    {
-      "name": "Exact Game Name From Library",
-      "reason": "Brief reason why"
-    }
-  ]
-}
-
-Respond ONLY with valid JSON. No markdown, no code blocks, no extra text.`;
+    Rules:
+    1. Recommend ONLY games that appear in the Steam Library above.
+    2. Copy the game names EXACTLY as they appear in the library.
+    3. Choose games that best match the user's mood, day type, and available time.
+    4. Give each recommendation a short reason of no more than 80 characters.
+    5. Return exactly 3 recommendations.`;
 
     // Call Groq API- openAI model for recommendations
     const completion = await groq.chat.completions.create({
