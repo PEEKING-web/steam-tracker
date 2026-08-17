@@ -82,7 +82,7 @@ Respond ONLY with valid JSON. No markdown, no code blocks, no extra text.`;
           content: prompt
         }
       ],
-      model: "llama-3.3-70b-versatile", // Fast and accurate
+      model: "openai/gpt-oss-20b", // Fast and accurate
       temperature: 0.7,
       max_tokens: 500,
       response_format: { type: "json_object" }
