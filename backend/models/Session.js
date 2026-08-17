@@ -52,4 +52,4 @@ const sessionSchema = new mongoose.Schema({
 sessionSchema.index({ steamId: 1, startTime: -1 });
 sessionSchema.index({ steamId: 1, appid: 1 });
 
-export default mongoose.model('Session', sessionSchema);
+export default mongoose.model('Session', sessionSchema, 'game_sessions');
